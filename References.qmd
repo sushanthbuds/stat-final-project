@@ -1,0 +1,9 @@
+---
+title: "References"
+---
+
+\[1\] *OpenML*. (n.d.-b). https://www.openml.org/search?type=data&status=active&id=45969
+
+\[2\] Kittyshow. (n.d.). *Obesity concept banner make vector image*. VectorStock. https://www.vectorstock.com/royalty-free-vector/obesity-concept-banner-make-vector-24712459
+
+\[3\] GeeksforGeeks. (2024, August 2). *Statistics in Maths*. GeeksforGeeks. https://www.geeksforgeeks.org/statistics/

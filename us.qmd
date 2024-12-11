@@ -1,0 +1,18 @@
+---
+title: "About us"
+---
+We are three graduate students currently pursuing \Masters in Data Analytics\ at \George Mason University\. Our team is dedicated to using data-driven approaches to explore and analyze trends, with a particular focus on health and wellness.
+
+
+
+## Sushanth Buddhala 
+
+Sushanth passionate about leveraging data science to solve complex problems. With a background in computer science, he brings strong analytical and programming skills to our team.
+
+## Sumanth Veluvolu
+
+Sumanth has a keen interest in statistical modeling and machine learning. He is enthusiastic about using data to make meaningful insights that can positively impact society.
+
+## Vivek Atchutanna
+
+Vivek focuses on data visualization and transforming raw data into actionable insights. His expertise lies in using visual analytics to tell compelling stories from data.

@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Analysing Obesity levels Based on various factors – Group_7</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Group_7</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./us.html"> 
+<span class="menu-text">Team</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./Introduction.html" aria-current="page"> 
+<span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Code</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./References.html"> 
+<span class="menu-text">References</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#about-the-dataset" id="toc-about-the-dataset" class="nav-link" data-scroll-target="#about-the-dataset">About the Dataset</a></li>
+  <li><a href="#noir-data-types" id="toc-noir-data-types" class="nav-link" data-scroll-target="#noir-data-types">NOIR Data types</a></li>
+  <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning">Data Cleaning</a></li>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link" data-scroll-target="#abstract">Abstract</a></li>
+  <li><a href="#research-questions" id="toc-research-questions" class="nav-link" data-scroll-target="#research-questions">Research Questions</a></li>
+  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Analysing Obesity levels Based on various factors</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Obesity .jpg" class="quarto-figure quarto-figure-center figure-img" width="760" height="500"></p>
+</figure>
+</div>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Obesity is a chronic disease that occurs when the body stores too much fat, which can lead to a negative impact on health (From, 2017). Obesity is an increasing, global public issue in the modern world. The data is taken from the open-source platform from OpenML. The dataset is about how various factors affect the obesity levels. In this project, we explore the obesity dataset and analyse the information and influencing factors of obesity levels among individuals based on various physical and lifestyle attributes. In the dataset we have fifteen independent variables to determine obesity levels for an individual. The dataset has important columns like height, weight, obesity level, vegetable consumption, and more. To achieve this we have used significant patterns and relationships within the data, addressing anomalies and trends. The results of this project are expected to provide meaningful insights on the key factors that contribute to obesity.</p>
+</section>
+<section id="about-the-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="about-the-dataset">About the Dataset</h2>
+<p>The dataset used in this study is the obesity and factors affecting the obesity. It’s taken from the open-source platform OpenML. The dataset is information related to obesity and comes under the health subset. The obesity dataset contains 2,000 records of individuals. Each column is a specific factor that depends on obesity levels. The target of the dataset is to predict obesity levels, which depend on how individuals consume vegetables, have physical activities, and any family history of obesity. The obesity is correlated with and depends on many factors. Dietary factors (calorie intake, vegetable and fruit intake, portion sizes), physical activity factors (exercise levels, screen time), genetic factors (family history of obesity), and psychological factors (stress, depression).</p>
+</section>
+<section id="noir-data-types" class="level2">
+<h2 class="anchored" data-anchor-id="noir-data-types">NOIR Data types</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column names</th>
+<th>Measurements</th>
+<th>NOIR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Age</td>
+<td>Numeric</td>
+<td>Ratio</td>
+</tr>
+<tr class="even">
+<td>BMI_Index</td>
+<td>Numeric</td>
+<td>Ratio</td>
+</tr>
+<tr class="odd">
+<td>Gender</td>
+<td>Categorical</td>
+<td>Nominal</td>
+</tr>
+<tr class="even">
+<td>Alcohol_consumption</td>
+<td>Categorical</td>
+<td>Nominal</td>
+</tr>
+<tr class="odd">
+<td>High_Caloric_Food_Frequency</td>
+<td>Categorical</td>
+<td>Nominal</td>
+</tr>
+<tr class="even">
+<td>Vegetable_Consumption</td>
+<td>Numeric</td>
+<td>Ordinal</td>
+</tr>
+<tr class="odd">
+<td>Average_of_meals</td>
+<td>Numeric</td>
+<td>Ordinal</td>
+</tr>
+<tr class="even">
+<td>Calorie_monitor</td>
+<td>Categorical</td>
+<td>Nominal</td>
+</tr>
+<tr class="odd">
+<td>Smoke</td>
+<td>Categorical</td>
+<td>Nominal</td>
+</tr>
+<tr class="even">
+<td>Water_Consumption</td>
+<td>Numeric</td>
+<td>Ratio</td>
+</tr>
+<tr class="odd">
+<td>Family_tree</td>
+<td>Categorical</td>
+<td>Nominal</td>
+</tr>
+<tr class="even">
+<td>Physical_Activity</td>
+<td>Numeric</td>
+<td>Ratio</td>
+</tr>
+<tr class="odd">
+<td>Screen_time</td>
+<td>Numeric</td>
+<td>Ratio</td>
+</tr>
+<tr class="even">
+<td>Food_consumed_between_meals</td>
+<td>Categorical</td>
+<td>Nominal</td>
+</tr>
+<tr class="odd">
+<td>Transportation</td>
+<td>Categorical</td>
+<td>Nominal</td>
+</tr>
+<tr class="even">
+<td>Obesity_levels</td>
+<td>Categorical</td>
+<td>Nominal</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="data-cleaning" class="level2">
+<h2 class="anchored" data-anchor-id="data-cleaning">Data Cleaning</h2>
+<p>The data cleaning is essential to get the statistics and understand the trend accurately. The data with missing values and duplicates can mislead the analysis. So, to increase the accuracy of the data, we have renamed the column names, which are lengthy, and we simplified them. In the age column, there were some rows where age is in decimal, which is practically not possible. We used the round-off method and converted them to numeric values. There was a column in the dataset where all the column had empty values, so we eliminated the row from the dataset. The dataset has duplicate values, so we removed the duplicate values. Initially, the dataset has height and weight rows in the dataset. We used height and weight to calculate the BMI index and added it to the dataset and eliminated height and weight.</p>
+</section>
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<p>Obesity is one of the major health problems affecting the world today, and these might be the results of a sedentary lifestyle as well as bad eating customs. This study analyses the frequency of physical activity, vegetable intake, and obesity’s percentage utilising a holistic dataset. Various statistical and machine learning techniques, such as logistic regression, decision trees, support vector machines, and clustering, were employed to discover various patterns and also predict levels of obesity. The data reveals interesting relationships between these variables and obesity and explains behavioural aspects that can affect weight loss. Importantly also, clustering analysis was able to distinguish different activity and diet groups, which would suggest that such patients require specific approaches. This work-related obesity’s core problem is multifactorial, and including this provides a rationale for creating individual prevention measures.</p>
+</section>
+<section id="research-questions" class="level2">
+<h2 class="anchored" data-anchor-id="research-questions">Research Questions</h2>
+<p>To analyse the dataset, we have chosen 3 research questions. Firstly, how an individual’s family history of obesity influences the likelihood of the person being obese. To get this information we use the BMI index and family history column. Secondly, see the significant difference in males and females in the level of obesity level. To achieve this we use the columns gender and obesity levels. Finally, the third research question is how the consumption of vegetables and physical activity correlate and influence the obesity levels. To achieve this we have columns of known individuals’ consumption levels of vegetables, their physical activities, and their obesity levels.</p>
+<ol type="1">
+<li>⁠How does a family history of being overweight influence an individual’s likelihood of obesity?</li>
+<li>Are there significant differences in obesity levels between males and females?</li>
+<li>How do physical activity frequency and vegetable consumption frequency influence&nbsp;obesity&nbsp;levels?</li>
+</ol>
+</section>
+<section id="methodology" class="level2">
+<h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
+<ol type="1">
+<li><p>⁠How does a family history of being overweight influence an individual’s likelihood of obesity?</p>
+<p><img src="BMI vs Obesity levels .png" class="img-fluid" width="760"></p></li>
+</ol>
+<p>The bar plot shows that people who have a family history of being overweight are more likely to fall into higher obesity categories, Obesity Type I and Obesity Type II than people who are described as having normal weight and overweight. Obesity Type I bar is much higher than the others, which indicates the presence of this category in people with such family history.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Influence of family history on obesity levels .png" class="quarto-figure quarto-figure-center figure-img" width="760" height="500"></p>
+</figure>
+</div>
+<p>This plot depicts how a family history of obesity affects obesity level of an individual. In case of non–inheritance-obesity families or those that give a “no” response on the x-axis, the number of people falling in obesity types such as Obesity Type I or Obesity Type II is relatively low. Nonetheless, comparing the figures for individuals with and without family reports of obesity or yes on the x-axis, there is a shift towards Obesity Type I and II and a shift away from the normal weight class. Individuals with obese parents or siblings are likely to be obese, because of genotypic and phenotypic similarity within families.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="distribution of obesity levels by gender family history yes.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="760"></p>
+</figure>
+</div>
+<p>The above chart shows the gender breakdown of the obesity levels of persons with the history of obesity on their nearer relatives. Males exhibit a higher frequency in the Obesity Type I group compared to females. On the other hand, the group of Obesity Type II patients includes more females, which testifies to their higher vulnerability to develop severe obesity. In Overweight the sex distribution is almost equal, though slightly in favor of the male sex. The Normal Weight has the least number in both genders, this reinforces the fact that people with family history of obesity are leaner than those who have no family history of obesity.</p>
+<p>The Chi-Square test was used for examining the relationship between Obesity Levels and Gender:</p>
+<p>. Males have a much higher count in the <strong>Obesity Type I</strong> category (484) compared to females (156).</p>
+<p>.&nbsp; Conversely, females are predominant in the <strong>Obesity Type II</strong> category (323), while males have only 1 case in this category.</p>
+<p>.&nbsp; The distribution of <strong>Normal Weight</strong> and <strong>Overweight</strong> categories is more balanced between genders.</p>
+<ol start="2" type="1">
+<li>Are there significant differences in obesity levels between males and females?</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Obesity levels by gender .png" class="quarto-figure quarto-figure-center figure-img" width="760" height="500"></p>
+</figure>
+</div>
+<p>The levels of obesity have been displayed as proportions in respect of male and female subjects. It shows that whereas the proportions of Normal Weight and Overweight are nearly identical, the proportions vary for the Obesity Type I and Obesity Type II. Males have a higher prevalence in Obesity Type I, whereas females slightly precede males in Obesity Type II. These gender differences lead to the hypothesis that the males can be more susceptible to moderate obesity type I, whereas females can be more prone to severe obesity type II. In general, the analysis of commonalities established in the chart refers to the fact that although obesity problem in male and female is general, there are differences between them in different types of obesity, stressing the necessity to address gender when designing obesity intervention and policies.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="SVM.png" class="quarto-figure quarto-figure-center figure-img" width="760" height="500"></p>
+</figure>
+</div>
+<p>The scatter plot above represents the separated classes of obesity levels by using the trained SVM model and BMI index and gender data. The classification clearly differentiates obesity levels Normal Weight (red) is more dominant at lower BMI values of both Males and Females. Overweight (purple) can be once again defined as ‘slightly higher’ on the BMI scale but does not intersect with higher obesity levels. Obesity Type I (green) included in mid to high BMI, and Obesity Type II (blue) is confined to high BMI region exclusively. The same holds in regard to the gender features: both females and males have similar distribution patterns of each obesity level. The result of applying the SVM model shows gender independent features in distinguishing obesity categories with the help of BMI index. This, in turn, indicates that BMI affords a high level of accuracy to obesity level classification.</p>
+<p>The scatter plot illustrates the relationship between <strong>BMI Index</strong>, <strong>Gender</strong>, and the predicted <strong>Obesity Levels</strong> using an SVM classification model. SVM model highlights BMI Index as strong predictor of obesity levels.</p>
+<ol start="3" type="1">
+<li>How do physical activity frequency and vegetable consumption frequency influence&nbsp;obesity&nbsp;levels?</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Interactive Contour Plot .png" class="quarto-figure quarto-figure-center figure-img" width="760" height="500"></p>
+</figure>
+</div>
+<p>The contour plot was used to visualize relationships between three variables: Physical Activity (X-axis), Vegetable Consumption (Y-axis) ,Probability of Obesity (Color).</p>
+<p>The contour plot, shows the predicted probability of obesity depending on the engagement in physical activity and vegetable consumption. The probability of obesity reduces as physical activity or vegetable consumption ramps up corresponding to the gradient from dark purple (high probability of obesity) to yellow (low probability of obesity). People who remain physically inactive and eat low vegetables have a higher probability of obesity as depicted on the regions with intensity color in the plot below. On the other hand, the regions of lowest obesity probability are those whose members report high physical activity and high vegetable intake. Using this visualization, the obesity risk would be reduced through the following positive impacts; Physical activity and vegetable consumption.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Decision tree .png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="787"></p>
+</figure>
+</div>
+<p>The decision tree shows the relationship between the consumption of vegetables and the amount of exercises people involve themselves in concerning obesity. The first level depicts that people with less than three servings of vegetables in a week are most likely to be classified as the Obesity Type I (69%). Of these, those who engage in physical activity of more than equal to two, have a higher probability of being in the Normal Weight (51%) as compared to the physical inactive population who are mostly in the Obesity Type I (46%). On the other hand, respondents who consumed vegetables, ≥ 3 servings are classified under the Obesity Type II (31%). From this group, those with physical activity of ≥2 have higher percentage of Normal Weight (67%) while these with low activity have higher likelihood of remaining in the Obesity Type II category(60%). Here, the need for taking vegetables is emphasized for minimizing levels of obesity as well as for achieving normal body weight through exercises.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>By analyzing this dataset, using statistics techniques that were employed in identifying trends and patterns within this project. From what we have discovered, we came to comprehend what causes obesity and presented it through charts and graphs. Through our exploration, we gained an understanding of the factors that affect obesity and demonstrated the trends using data-driven insights. The findings made from this project add to the knowledge about which factors cause a rise in the obesity level, such as height, weight, alcohol consumption, and so on. In this project we discovered that obesity rates are directly linked to increased physical activity, how high-calorie meals, and the frequency of meals play a role in the elevation of obesity levels.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

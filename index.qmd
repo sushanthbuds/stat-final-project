@@ -1,0 +1,300 @@
+---
+title: "Code"
+---
+
+```{r, warning=FALSE, message=FALSE}
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(plyr)
+library(randomForest)
+library(caret)
+library(plotly)
+library(nnet)
+library(psych)
+library(rpart)
+library(rpart.plot)
+library(randomForest)
+library(xgboost)
+library(e1071)
+
+
+
+obesity_data <- read.csv("C:/Users/buddh/Downloads/Obesity Dataset.csv",skip=46)
+
+obesity_data_clean <- obesity_data %>%
+  select(-X,-X.1) %>%
+  mutate(BMI_index = Weight/Height) %>%
+  select(-Weight,-Height)
+
+obesity_data_clean <- obesity_data_clean %>%
+  relocate(BMI_index, .before="Gender")
+
+
+obesity_data_clean <- rename(obesity_data_clean,c("Alcohol_consumption"="CALC"))
+obesity_data_clean <- rename(obesity_data_clean,c("High_Caloric_Food_Frequency"="FAVC"))
+obesity_data_clean <- rename(obesity_data_clean,c("Vegetable_Consumption"="FCVC"))
+obesity_data_clean <- rename(obesity_data_clean,c("Average_of_meals"="NCP"))
+obesity_data_clean <- rename(obesity_data_clean,c("Water_Consumption"="CH2O"))
+obesity_data_clean <- rename(obesity_data_clean,c("Family_tree"="family_history_with_overweight"))
+obesity_data_clean <- rename(obesity_data_clean,c("Physical_Activity"="FAF"))
+obesity_data_clean <- rename(obesity_data_clean,c("Screen_time"="TUE"))
+obesity_data_clean <- rename(obesity_data_clean,c("Food_consumed_between_meals"="CAEC"))
+obesity_data_clean <- rename(obesity_data_clean,c("Transportation"="MTRANS"))
+obesity_data_clean <- rename(obesity_data_clean,c("Obesity_levels"="Nobeyesdad"))
+obesity_data_clean <- rename(obesity_data_clean,c("Calorie_monitor"="SCC"))
+
+
+obesity_data_clean <- na.omit(obesity_data_clean)
+
+obesity_data_clean %>%
+  filter(Gender=="Male") %>%
+  slice_max(Age,n=1)
+
+obesity_data_clean %>%
+  filter(Gender=="Male") %>%
+  slice_min(Age,n=1)
+
+
+obesity_data_clean %>%
+  filter(Gender=="Female") %>%
+  slice_max(Age,n=1)
+
+obesity_data_clean %>%
+  filter(Gender=="Female") %>%
+  slice_min(Age,n=1)
+
+# 1. Remove duplicates
+obesity_data_clean <- distinct(obesity_data_clean)
+
+
+# Round the BMI_index column to 2 decimal places
+obesity_data_clean$BMI_index <- round(obesity_data_clean$BMI_index, 2)
+
+obesity_data_clean$Age <- floor(obesity_data_clean$Age)
+
+obesity_data_clean$Average_of_meals <- floor(obesity_data_clean$Average_of_meals)
+
+obesity_data_clean$Vegetable_Consumption <- floor(obesity_data_clean$Vegetable_Consumption)
+
+obesity_data_clean$Water_Consumption <- floor(obesity_data_clean$Water_Consumption)
+
+obesity_data_clean$Physical_Activity <- floor(obesity_data_clean$Physical_Activity)
+
+obesity_data_clean$Screen_time <- round(obesity_data_clean$Screen_time)
+
+# Save the cleaned data to a new file
+write.csv(obesity_data_clean, "Cleaned_Dataset_rename.csv", row.names = FALSE)
+
+obesity_data_clean$Obesity_levels <- gsub("Insufficient_Weight", "Normal_Weight", obesity_data_clean$Obesity_levels)
+
+obesity_data_clean$Obesity_levels <- gsub("Overweight_Level_II", "Overweight_Level_I", obesity_data_clean$Obesity_levels)
+
+obesity_data_clean$Obesity_levels <- gsub("Obesity_Type_I", "Obesity_Type_II", obesity_data_clean$Obesity_levels)
+
+
+obesity <- read_csv("C:/Users/buddh/OneDrive/Desktop/Cleaned_Dataset_rename.csv")
+
+table(obesity$Obesity_levels)
+
+
+# 1. How does a family history of being overweight influence an individual’s likelihood of obesity ?
+
+# Filter data for family history
+inheritance <- obesity %>%
+  select(BMI_index, Obesity_levels, Family_tree, Gender) %>%
+  filter(Family_tree == "yes")
+
+# Summarize data to get counts for each Obesity_level and Gender
+inheritance_summary <- inheritance %>%
+  group_by(Obesity_levels, Gender) %>%
+  summarise(Count = n(), .groups = "drop")  
+
+plot_ly(inheritance, 
+        y = ~BMI_index, 
+        x = ~Obesity_levels, 
+        color = ~Obesity_levels, 
+        type = 'bar', 
+        mode = 'markers') %>%
+  layout(title = "BMI vs. Obesity Levels (Family History of Overweight)",
+         xaxis = list(title = "BMI Index"),
+         yaxis = list(title = "Obesity Level"),
+         showlegend = TRUE)
+
+
+# Interactive Visualization
+family_plot <- obesity %>%
+  group_by(Family_tree, Obesity_levels) %>%
+  summarise(Count = n()) %>%
+  mutate(Proportion = sum(Count)) %>%
+  plot_ly(x = ~Family_tree, y = ~Proportion, color = ~Obesity_levels, type = "bar") %>%
+  layout(title = "Influence of Family History on Obesity Levels",
+         xaxis = list(title = "Family History of Obesity"),
+         yaxis = list(title = "Proportion"),
+         barmode = "stack")
+
+family_plot
+
+
+# Perform Chi-Square Test
+chi_table <- table(inheritance$Obesity_levels, inheritance$Gender)
+chi_sq_test <- chisq.test(chi_table)
+
+# Display the results of the Chi-Square Test
+print(chi_sq_test)
+print(chi_table)
+
+# Create a bar plot to visualize the distribution
+plotly_plot <- plot_ly(
+  data = inheritance_summary,
+  x = ~Obesity_levels,
+  y = ~Count,
+  color = ~Gender,
+  type = 'bar',
+  colors = "Set2"  # Optional color palette
+) %>%
+  layout(
+    title = "Distribution of Obesity Levels by Gender (Family History = Yes)",
+    xaxis = list(title = "Obesity Levels"),
+    yaxis = list(title = "Count"),
+    barmode = 'group'  # Grouped bars
+  )
+
+# Render the plot
+plotly_plot
+
+
+#2. Are there significant differences in obesity levels between males and females ?
+
+
+gender_table <- table(obesity$Gender, obesity$Obesity_levels)
+chi_test <- chisq.test(gender_table)
+print(chi_test)
+
+# Interactive Visualization
+gender_plot <- obesity %>%
+  group_by(Gender, Obesity_levels) %>%
+  summarise(Count = n()) %>%
+  mutate(Proportion = Count / sum(Count)) %>%
+  plot_ly(x = ~Gender, y = ~Proportion, color = ~Obesity_levels, type = "bar") %>%
+  layout(title = "Obesity Levels by Gender",
+         xaxis = list(title = "Gender"),
+         yaxis = list(title = "Proportion"),
+         barmode = "stack")
+
+gender_plot
+
+# SVM
+
+# Ensure Obesity_levels is a factor
+obesity$Obesity_levels <- as.factor(obesity$Obesity_levels)
+
+# Train the SVM model for classification
+svm_model <- svm(Obesity_levels ~ Gender + BMI_index, data = obesity, kernel = "linear")
+
+# Print model summary
+print(svm_model)
+
+# Make predictions
+predictions <- predict(svm_model, obesity)
+
+# Create confusion matrix
+confusion_matrix <- table(Predicted = predictions, Actual = obesity$Obesity_levels)
+print(confusion_matrix)
+
+# Calculate accuracy
+accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
+cat("Accuracy of the SVM model:", accuracy, "\n")
+
+# Plot SVM decision boundary (only works for two continuous predictors)
+
+obesity$Predicted <- predictions
+
+plotly_plot <- ggplot(obesity, aes(x = BMI_index, y = Gender, color = Predicted)) +
+  geom_point(size = 2, alpha = 0.7) +
+  labs(
+    title = "SVM Classification with BMI_index and Gender",
+    x = "BMI Index",
+    y = "Gender",
+    color = "Predicted Obesity Levels"
+  ) +
+  theme_minimal()
+
+# Convert ggplot object to plotly
+plotly_graph <- ggplotly(plotly_plot)
+
+# Render the Plotly graph
+plotly_graph
+
+
+#3. How much physical activity frequency and vegetable consumption frequency influence obesity levels?
+  
+
+# Summarize key variables
+summary(obesity)
+
+# Check distribution of key variables
+psych::describe(obesity[, c("Physical_Activity", "Vegetable_Consumption")])
+
+#Logistic Regression 
+
+
+obesity$Obesity_binary <- ifelse(obesity$Obesity_levels %in% c("Overweight", "Obesity Type I", "Obesity Type II"), 1, 0)
+
+# Fit the logistic regression model
+logistic_model <- glm(Obesity_binary ~ Physical_Activity + Vegetable_Consumption, 
+                      data = obesity, family = binomial)
+
+# Display the summary of the logistic regression model
+summary(logistic_model)
+
+library(plotly)
+
+# Generate a grid of values for predictions
+new_data <- expand.grid(
+  Physical_Activity = seq(min(obesity$Physical_Activity, na.rm = TRUE), max(obesity$Physical_Activity, na.rm = TRUE), length = 100),
+  Vegetable_Consumption = seq(min(obesity$Vegetable_Consumption, na.rm = TRUE), max(obesity$Vegetable_Consumption, na.rm = TRUE), length = 100)
+)
+
+# Predict probabilities
+new_data$Predicted_Probability <- predict(logistic_model, newdata = new_data, type = "response")
+
+# Interactive contour plot
+contour_plot <- plot_ly(
+  data = new_data,
+  x = ~Physical_Activity,
+  y = ~Vegetable_Consumption,
+  z = ~Predicted_Probability,
+  type = "contour",
+  colorscale = "Viridis",
+  colorbar = list(title = "Probability")
+) %>%
+  layout(
+    title = "Interactive Contour Plot of Predicted Probability of Obesity",
+    xaxis = list(title = "Physical Activity"),
+    yaxis = list(title = "Vegetable Consumption")
+  )
+
+contour_plot
+
+
+#Decision Tree 
+
+
+tree_model <- rpart(Obesity_levels ~ Physical_Activity + Vegetable_Consumption, data = obesity, method = "class")
+rpart.plot(tree_model)
+
+
+#Chi-square test 
+
+
+# Categorize physical activity and vegetable consumption into low/high
+obesity$Physical_Activity_Cat <- cut(obesity$Physical_Activity, breaks = 2, labels = c("Low", "High"))
+obesity$Vegetable_Consumption_Cat <- cut(obesity$Vegetable_Consumption, breaks = 2, labels = c("Low", "High"))
+
+# Perform Chi-Square test
+chi_sq_test <- chisq.test(table(obesity$Physical_Activity_Cat, obesity$Obesity_levels))
+print(chi_sq_test)
+
+
+```

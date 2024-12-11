@@ -1,0 +1,23 @@
+---
+title: "Final Project"
+about:
+  template: trestles
+  image: Statistics-Banner-Image.webp
+  image-shape: rectangle 
+  image-width: 50em
+  links:
+    - text: Sushanth's Mail
+      icon: envelope
+      href: mailto:sbuddhal@gmu.edu
+    - text: Sumanth's Mail
+      icon: envelope
+      href: mailto:sveluvo@gmu.edu
+    - text: Vivek's Mail
+      icon: envelope
+      href: mailto:vatchuta@gmu.edu
+    - text: Sushanth GitHub
+      icon: github
+      href: https://github.com/sushanthbuds
+---
+
+
